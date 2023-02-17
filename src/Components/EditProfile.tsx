@@ -1,82 +1,75 @@
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable
+} from "firebase/storage";
 import React, { ChangeEvent, useContext, useEffect } from "react";
 import { useState } from "react";
-import { User, userType } from "../Context/User";
-import { db } from "../FirebaseConfig";
+import { FcPicture } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { User, UserType } from "../Context/User";
+import { db, storage } from "../FirebaseConfig";
 
 export const EditProfile = () => {
-  const [ user, setUser]  = useState<any>()
-  console.log(user)
-  const [details, setDetails] = useState({
-    name: "",
-    email: ""
-  });
-  const [password, setPassword] = useState<number | string>()
-  const [newPassword, setNewPassword] = useState<number | string>()
+  const [avatar, setAvatar] = useState<File | null>(null);
+  const { docId, user } = useContext(User) as UserType;
 
-  const { docId } = useContext(User) as userType;
+  let navigate = useNavigate();
 
-  const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
-    setDetails({ ...details, [e.target.name]: e.target.value });
-  };
-
-  const changeName = () => {
-    if (details) {
-      updateDoc(doc(db, "users", docId), {
-        displayName: details.name,
-        email: details.email
-      });
+  const addFile = (e: ChangeEvent<HTMLInputElement>): void => {
+    if (!e.target.files) {
+      return;
     }
-    setDetails({
-      name: "",
-      email: ""
-    });
+    setAvatar(e.target.files[0]);
   };
 
   useEffect(() => {
-  const res =   getDoc(doc(db, "users", docId)).then((snap) => {
-      setUser(snap.data());
-  });
-
-  })
-
-const changePassword = () => {
-  
-}
+    if (avatar) {
+      const uploading = async () => {
+        const name = new Date().getTime() + avatar.name;
+        const imgRef = ref(storage, `image/${name}`);
+        try {
+          if (user.avatarPath) {
+            await deleteObject(ref(storage, user.avatarPath));
+          }
+          await uploadBytesResumable(imgRef, avatar).then(() => {
+            getDownloadURL(imgRef).then(async (url) => {
+              await updateDoc(doc(db, "users", docId), {
+                avatarPath: url
+              });
+            });
+          });
+          setAvatar(null);
+          toast.success("Profile changed");
+          setTimeout(() => {
+            navigate("/Profile");
+          }, 3000);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      uploading();
+    }
+  }, [avatar, docId, navigate, user.avatarPath]);
 
   return (
-    <div>
+    <div className="users-div">
       <input
-        type="text"
-        placeholder="change name"
-        name="name"
-        value={details.name}
-        onChange={handleInput}
+        required
+        style={{ display: "none" }}
+        type="file"
+        id="file"
+        onChange={addFile}
       />
-      <input
-        type="text"
-        placeholder="change email"
-        name="email"
-        value={details.email}
-        onChange={handleInput}
-      />
-            <button onClick={changeName}>Change</button>
-            <br></br>
-      <input
-        type="password"
-        placeholder="your old password"
-        name="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <input 
-       type="password"
-       placeholder="New password"
-       name="newPassword"
-       value={newPassword}
-       onChange={(e) => setNewPassword(e.target.value)}
-      />
-      <button onClick={changePassword}>Change</button>
+      <label htmlFor="file">
+        <div className="space-betweenEdit">
+          <FcPicture className="addPhoto" />
+          <span className="span-photo">Choose your profile</span>
+        </div>
+      </label>
     </div>
   );
 };

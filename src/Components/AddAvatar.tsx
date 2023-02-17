@@ -1,14 +1,14 @@
 import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { User, userType } from "../Context/User";
+import { Link, useNavigate } from "react-router-dom";
+import { User, UserType } from "../Context/User";
 import { db, storage } from "../FirebaseConfig";
-import Add from "../Images/addAvatar.png";
+import { FcAddImage } from "react-icons/fc";
 
 export const AddAvatar = () => {
   const [avatar, setAvatar] = useState<any>(null);
-  const { docId } = useContext(User) as userType;
+  const { docId } = useContext(User) as UserType;
 
   let navigate = useNavigate();
 
@@ -33,7 +33,7 @@ export const AddAvatar = () => {
             });
           });
           setTimeout(() => {
-            navigate("/");
+            navigate("/AboutYou");
           }, 3000);
           setAvatar(null);
         } catch (err) {
@@ -45,7 +45,7 @@ export const AddAvatar = () => {
   }, [avatar, docId, navigate]);
 
   return (
-    <div>
+    <div className="addAvatar">
       <input
         required
         style={{ display: "none" }}
@@ -54,9 +54,14 @@ export const AddAvatar = () => {
         onChange={addFile}
       />
       <label htmlFor="file">
-        <img src={Add} alt="Profile" />
-        <span>Add an avatar</span>
+        <div className="handle-avatar">
+          <FcAddImage className="addprofile" />
+          <span className="addAnAvatar">Add an avatar</span>
+        </div>
       </label>
+      <Link className="link " to="/AboutYou">
+        <button className="SKIP">Skip</button>
+      </Link>
     </div>
   );
 };

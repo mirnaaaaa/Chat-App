@@ -1,30 +1,63 @@
-import React from "react";
-import Chat from "./Components/Chat";
+import "./App.css";
+import React, { useContext } from "react";
+import Users from "./Components/Users";
 import Navbar from "./Components/Navbar";
 import SignUp from "./Components/SignUp";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { UserProvider } from "./Context/User";
+import { User, UserType } from "./Context/User";
 import Login from "./Components/Login";
 import { Profile } from "./Components/Profile";
-import { EditProfile } from "./Components/EditProfile";
 import { AddAvatar } from "./Components/AddAvatar";
+import { UserDataProvider } from "./Context/UserData";
+import Chat from "./Components/Chat";
+import { UserInformation } from "./Components/UserInformation";
+import { AboutYou } from "./Components/AboutYou";
+import Status from "./Components/Status";
+import { AllUsersProvider } from "./Context/AllUsers";
+import { AddStatus } from "./Components/AddStatus";
+import { PostsProvider } from "./Context/Posts";
+import { ShowStatus } from "./Components/ShowStatus";
+import { EditProfile } from "./Components/EditProfile";
+import { Show, ShowType } from "./Context/Show";
+import { Welcome } from "./Components/Welcome";
 
 export default function App() {
-  
+  const { docId } = useContext(User) as UserType;
+  const { show } = useContext(Show) as ShowType;
+
   return (
-    <div>
+    <div className="app">
       <Router>
-        <UserProvider>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Chat />} />
-            <Route path="/SignUp" element={<SignUp />} />
-            <Route path="/Profile" element={<Profile />} />
-            <Route path="/Login" element={<Login />} />
-            <Route path="/EditProfile" element={<EditProfile />} />
-            <Route path="/AddAvatar" element={<AddAvatar />} />
-          </Routes>
-        </UserProvider>
+        <UserDataProvider>
+          <AllUsersProvider>
+            <PostsProvider>
+              {docId && (
+                <>
+                  <Navbar />
+                  {show ? <Status /> : <Users />}
+                </>
+              )}
+              <div className="container">
+                <Routes>
+                  <Route path="/" element={<Welcome />} />
+                  <Route path="/SignUp" element={<SignUp />} />
+                  <Route path="/Profile" element={<Profile />} />
+                  <Route path="/Login" element={<Login />} />
+                  <Route path="/AddAvatar" element={<AddAvatar />} />
+                  <Route path="/Chat" element={<Chat />} />
+                  <Route path="/EditProfile" element={<EditProfile />} />
+                  <Route path="/ShowStatus/:Id" element={<ShowStatus />} />
+                  <Route
+                    path="/UserInformation/:id"
+                    element={<UserInformation />}
+                  />
+                  <Route path="/AboutYou" element={<AboutYou />} />
+                  <Route path="/AddStatus" element={<AddStatus />} />
+                </Routes>
+              </div>
+            </PostsProvider>
+          </AllUsersProvider>
+        </UserDataProvider>
       </Router>
     </div>
   );

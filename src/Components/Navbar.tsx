@@ -1,38 +1,54 @@
-import React from 'react'
-import { useContext } from 'react';
-import { signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { User, userType } from '../Context/User';
-import { auth, db } from '../FirebaseConfig';
-import { doc, updateDoc } from 'firebase/firestore';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useContext } from "react";
+import { User, UserType } from "../Context/User";
+import { Link } from "react-router-dom";
+import Add from "../Images/no-image.png";
+import { BsChatQuote } from "react-icons/bs";
+import { GiAwareness } from "react-icons/gi";
+import { Show, ShowType } from "../Context/Show";
 
 export default function Navbar() {
-  const {docId} = useContext(User)  as userType
+  const { docId, user } = useContext(User) as UserType;
+  const { setShow } = useContext(Show) as ShowType;
 
-  let navigate = useNavigate();
-
-  const handleLogout = async () => {
-    updateDoc(doc(db, "users", docId), {
-      isOnline: false
-    })
-    await signOut(auth).then(() => {
-      navigate("/Login");
-    });
-  };
   return (
-    <div>
-        {docId ? 
-      <>
-      <Link to="/Profile">Profile</Link>
-      <h1 onClick={handleLogout}>LogOut</h1>
-      </>  :
-      <>
-
-      <Link to="/SignUp">Sign in</Link>
-      <Link to="/Login">register</Link>
-      </>
-      }
+    <div className="nav-bar">
+      <div className="nav-fixed">
+        {docId ? (
+          <div className="nav-container">
+            <div className="space">
+              <BsChatQuote
+                className="BsChatQuote"
+                onClick={() => setShow(false)}
+              />
+              <GiAwareness
+                className="BsChatQuote"
+                onClick={() => setShow(true)}
+              />
+            </div>
+            <div className="margin">
+              <Link to="/Profile">
+                <img
+                  className="profile-nav"
+                  src={user?.avatarPath || Add}
+                  alt="profile"
+                />
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="nav-container">
+              <Link className="link" to="/Login">
+                Sign in
+              </Link>
+              <Link className="link" to="/SignUp">
+                register
+              </Link>
+            </div>
+          </>
+        )}
+      </div>
     </div>
-  )
+  );
 }

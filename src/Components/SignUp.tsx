@@ -27,7 +27,7 @@ export default function SignUp() {
           email: data.email,
           password: data.password,
           uid: res.user.uid,
-          createdAt: Timestamp.fromDate(new Date()),
+          createdAt: Timestamp.now(),
           isOnline: true
         })
           .then(() => {
@@ -40,7 +40,6 @@ export default function SignUp() {
             // localStorage.setItem("isAuth", true);
             setTimeout(() => {
               navigate("/AddAvatar");
-              //setIsAuth(true);
             }, 3000);
           })
           .catch((error) => {
@@ -51,34 +50,44 @@ export default function SignUp() {
         toast.error(error.message);
       });
   };
+
   return (
-    <div>
+    <div className="login">
       <ToastContainer />
-      <input
-        placeholder="Enter your name"
-        type="text"
-        name="displayname"
-        value={data.displayname}
-        onChange={submitData}
-        required
-      />
-      <input
-        placeholder="Enter your email"
-        type="email"
-        name="email"
-        value={data.email}
-        onChange={submitData}
-        required
-      />
-      <input
-        placeholder="Enter your password"
-        type="password"
-        name="password"
-        value={data.password}
-        onChange={submitData}
-        required
-      />
-      <button onClick={submit}>SignUp</button>
+      <div className="loginContainer">
+        <input
+          className="loginEmail"
+          placeholder="Enter your name"
+          type="text"
+          name="displayname"
+          value={data.displayname}
+          onChange={submitData}
+          required
+        />
+        <input
+          className="loginEmail"
+          placeholder="Enter your email"
+          type="email"
+          name="email"
+          value={data.email}
+          onChange={submitData}
+          required
+        />
+        <input
+          className="loginEmail"
+          placeholder="Enter your password"
+          type="password"
+          name="password"
+          value={data.password}
+          onChange={submitData}
+          required
+        />
+        <div className="LOGINDiv">
+          <button className="LOGIN" onClick={submit}>
+            SignUp
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
