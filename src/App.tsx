@@ -20,6 +20,7 @@ import { ShowStatus } from "./Components/ShowStatus";
 import { EditProfile } from "./Components/EditProfile";
 import { Show, ShowType } from "./Context/Show";
 import { Welcome } from "./Components/Welcome";
+import { BsWhatsapp } from "react-icons/bs";
 
 export default function App() {
   const { docId } = useContext(User) as UserType;

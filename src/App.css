@@ -97,6 +97,7 @@ display: flex;
 }
 .background{
   font-size: 10px;
+  display: flex;
 }
 .user1 {
   background-color: #128C7E;
@@ -308,6 +309,7 @@ align-items: center;
   align-items: center;
   justify-content: center;
 }
+
 .LOGINDiv{
   display: flex;
   align-items: center;
@@ -610,6 +612,14 @@ padding: 15px 0px;
 .BsChatQuote{
   padding: 10px 0px;
 }
+.whatsapp {
+  display: flex;
+  font-size: 25px;
+  color: #25D366;
+  padding-left: 15px;
+  margin-top: 13px;
+}
+
 .BsChatQuote:hover{
   color: #001a00;
   cursor: pointer;

@@ -1,8 +1,9 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { User, UserType } from "../Context/User";
 import { auth, db } from "../FirebaseConfig";
 
 export default function Login() {
@@ -10,8 +11,15 @@ export default function Login() {
     email: "",
     password: ""
   });
+  const { docId } = useContext(User) as UserType;
 
   let navigate = useNavigate();
+
+  useEffect(() => {
+    if (docId) {
+      navigate("/");
+    }
+  }, [docId, navigate]);
 
   const handleSubmit = (e: ChangeEvent<HTMLInputElement>): void => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -70,10 +78,10 @@ export default function Login() {
           </button>
         </div>
         <div className="LOGINDivs">
-        <Link className="link" to="/SignUp">
-        <button className="LOGIN">SignUp</button>
-        </Link>
-      </div>
+          <Link className="link" to="/SignUp">
+            <button className="LOGIN">SignUp</button>
+          </Link>
+        </div>
       </div>
     </div>
   );
