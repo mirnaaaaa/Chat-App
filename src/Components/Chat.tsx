@@ -96,7 +96,7 @@ export default function Chat() {
         <div className="show-message-better">
           {chat &&
             chat.map((x) => (
-              <div className="chat-header">
+              <div className="chat-header"  key={x.uid}>
                 <Link className="link" to={`/UserInformation/${x.displayName}`}>
                   <div className="chat-div" key={x.uid}>
                     <img className="profile" src={x.avatarPath} alt="Profile" />
@@ -117,7 +117,7 @@ export default function Chat() {
         </div>
         {chats &&
           chats.map((message: any) => (
-            <div key={message.Id}>
+            <div>
               <Messages message={message} />
             </div>
           ))}

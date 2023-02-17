@@ -4,7 +4,7 @@ import React, { ChangeEvent, useState } from "react";
 import { auth, db } from "../FirebaseConfig";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [data, setData] = useState({
@@ -85,7 +85,12 @@ export default function SignUp() {
         <div className="LOGINDiv">
           <button className="LOGIN" onClick={submit}>
             SignUp
-          </button>
+          </button> 
+        </div>
+        <div className="LOGINDivs">
+        <Link className="link" to="/Login">
+        <button className="LOGIN">Login</button>
+        </Link>
         </div>
       </div>
     </div>

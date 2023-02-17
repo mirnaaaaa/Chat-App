@@ -24,7 +24,7 @@ export const ShowStatus = () => {
     const seen = async () => {
       const id = post?.Id;
       if (post) {
-         updateDoc(doc(db, "Posts", id), {
+        updateDoc(doc(db, "Posts", id), {
           Seen: true
         });
       }

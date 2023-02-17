@@ -12,7 +12,7 @@ scroll.current?.scrollIntoView({behavior: "smooth"})
   },[])
 
   return (
-    <div className="message-container" ref={scroll}>
+    <div className="message-container" ref={scroll}  key={message.Id}>
       <div className="right">
         <h1 className={ message.from === user.displayName ? "user1" : "user2"}>
           {message.text}

@@ -28,7 +28,7 @@ export const EachUser = ({ eachUser }: PostsProps) => {
       }
     });
     return () => snap();
-  }, [id, last]);
+  }, [id, setLast]);
 
   return (
     <div className="user-div" onClick={() => startChat(eachUser)}>
@@ -54,7 +54,7 @@ export const EachUser = ({ eachUser }: PostsProps) => {
           <></>
         )}
       </div>
-    </div>
+      </div>
     </div>
   );
 };

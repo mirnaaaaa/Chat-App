@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { ChangeEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { auth, db } from "../FirebaseConfig";
 
@@ -69,6 +69,11 @@ export default function Login() {
             Login
           </button>
         </div>
+        <div className="LOGINDivs">
+        <Link className="link" to="/SignUp">
+        <button className="LOGIN">SignUp</button>
+        </Link>
+      </div>
       </div>
     </div>
   );

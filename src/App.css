@@ -303,6 +303,11 @@ align-items: center;
   justify-content: center;
   align-items: center;
 }
+.LOGINDivs{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .LOGINDiv{
   display: flex;
   align-items: center;

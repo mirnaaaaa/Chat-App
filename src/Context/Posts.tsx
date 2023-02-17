@@ -22,21 +22,7 @@ export interface PostsType {
 export const Posts = createContext<PostsType | null>(null);
 
 export const PostsProvider = ({ children }: ChildrenType) => {
-  const [posts, setPosts] = useState<PostType[]>(() => {
-    const storedValues = localStorage.getItem("posts");
-    return storedValues ? JSON.parse(storedValues) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem("posts", JSON.stringify(posts));
-  }, [posts]);
-
-  useEffect(() => {
-    const handle = localStorage.getItem("posts");
-    if (handle) {
-      setPosts(JSON.parse(handle));
-    }
-  }, []);
+  const [posts, setPosts] = useState<PostType[]>([]);
 
   const value = {
     posts,

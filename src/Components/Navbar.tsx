@@ -14,7 +14,7 @@ export default function Navbar() {
   return (
     <div className="nav-bar">
       <div className="nav-fixed">
-        {docId ? (
+        {docId && (
           <div className="nav-container">
             <div className="space">
               <BsChatQuote
@@ -36,17 +36,6 @@ export default function Navbar() {
               </Link>
             </div>
           </div>
-        ) : (
-          <>
-            <div className="nav-container">
-              <Link className="link" to="/Login">
-                Sign in
-              </Link>
-              <Link className="link" to="/SignUp">
-                register
-              </Link>
-            </div>
-          </>
         )}
       </div>
     </div>
