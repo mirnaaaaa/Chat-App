@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Chat from "./Components/Chat";
+import Navbar from "./Components/Navbar";
+import SignUp from "./Components/SignUp";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { UserProvider } from "./Context/User";
+import Login from "./Components/Login";
+import { Profile } from "./Components/Profile";
+import { EditProfile } from "./Components/EditProfile";
+import { AddAvatar } from "./Components/AddAvatar";
 
-function App() {
+export default function App() {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <UserProvider>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Chat />} />
+            <Route path="/SignUp" element={<SignUp />} />
+            <Route path="/Profile" element={<Profile />} />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/EditProfile" element={<EditProfile />} />
+            <Route path="/AddAvatar" element={<AddAvatar />} />
+          </Routes>
+        </UserProvider>
+      </Router>
     </div>
   );
 }
-
-export default App;
