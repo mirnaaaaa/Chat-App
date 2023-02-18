@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Posts, PostsType } from "../Context/Posts";
-import { PostType } from "./../Context/Posts";
+import { PostType } from "../Context/Posts";
 import Moment from "react-moment";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../FirebaseConfig";

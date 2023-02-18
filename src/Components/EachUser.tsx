@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { RiRadioButtonLine } from "react-icons/ri";
 import { UsersType } from "../Type/UserType";
 import { UserData } from "../Context/UserData";
-import { UserDataType } from "./../Context/UserData";
+import { UserDataType } from "../Context/UserData";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
 import { User, UserType } from "../Context/User";

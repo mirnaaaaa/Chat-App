@@ -1,11 +1,17 @@
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
 .app{
   background-color: #1a1a1a;
   color: aliceblue;
-  height: auto;
-  min-height: 100vh;
-  flex-wrap: wrap;
   border: 5px  solid #25D366;
   display: flex;
+  width: 180vh;
+  height: 95vh;
 
 }
 .container {
@@ -13,6 +19,7 @@
   align-items: center;
   justify-content: center;
   flex: 2;
+  width: 100%;
 
 }
   @media screen and (max-width: 480px) {
@@ -37,8 +44,7 @@ padding-top: 20px;
 .show-message-better{
   padding-bottom:100px ;
 }
-.right {
-}
+
 .time-message {
   font-size: 9px;
   display: flex;
@@ -192,7 +198,6 @@ margin-left: 8px;
   display: flex;
   padding: 10px  5px;
   padding-bottom: 15px;
-
 }
 .chat {
   display: flex;
@@ -206,7 +211,10 @@ border-radius: 7px;
 height: 60px;
 width: 200px;
 }
-
+.my-status{
+  margin-bottom: -5px;
+  margin-top: 11px;
+}
 .type {
   display: flex;
 align-items: center;
@@ -216,12 +224,12 @@ justify-content: center;
   font-size: 17px;
   padding-bottom: 10px;
 }
+.links {
+  text-decoration: none;
+  color: #FFFFFF8c;
+}
 .addStatus {
   display: flex;
-  flex-direction: column;
-  padding-top: 45px;
-  align-items: center;
-  justify-content: center;
 }
 .addImage {
   margin: 10px;
@@ -385,12 +393,11 @@ cursor: pointer;
 }
 .search {
   position: fixed;
-  align-items: center;
-  justify-content: center;
+width: 100%;
 }
 .search-USERS {
   height: 25px;
-  width: 200px;
+  width: 18%;
   color: aliceblue;
   background-color: #1a1a1a;
 }
@@ -413,17 +420,12 @@ color: aliceblue;
 background-color: #0d0d0d;
 border-radius: 5px;
 }
-.search-div{
-  display: flex;
-  margin: 0 5px;
-}
+
 .search-result{
   padding-top: 90px;
 }
 .input {
   display: flex;
-justify-content: center;
-align-items: center;
 }
 .search-btn {
   border-radius: 80px;
@@ -432,9 +434,19 @@ align-items: center;
   margin-left: -48px;
   font-size: 10px;
 }
+.hr{
+  color: #a9a6a68c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7px 0; 
+  margin-top: 17px ;
+  margin-right: 15px;
+}
 .search-btn:hover {
   cursor: pointer;
-  background-color: #25D366;
+  color: #FFFFFF8c;
+  background-color: #1a1a1a;
 }
 .line {
   border-style: solid;
@@ -462,17 +474,6 @@ align-items: center;
 .status-name {
   font-size: 13px;
   margin-bottom: 21px;
-}
-.pad-bottom{
-  margin-left: 5px;
-}
-.status{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 0.5;
-  background-color: #0d0d0d;
-  margin-top: 5px;
 }
 .user-status {
   font-size: 13px;
@@ -513,23 +514,18 @@ margin-top: -15px;
   display: flex;
   flex-direction: column;
 }
-.addstatus {
-  margin-top: -5px;
-}
-.my-status {
-  margin-top: 14px;
+
+.pad-bottom{
+  padding-left: 15px;
 }
 .statusH1 {
   font-size: 18px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 250px;
 }
 .statusH2 {
-  width: 250px;
-padding-left: 9px;
-  font-size: 18px;
+padding-left: 6px;
+  font-size: 14px;
+  color: #FFFFFF8c;
 }
 .postStatus {
   width: 100px;
@@ -627,39 +623,55 @@ padding: 15px 0px;
 .chat-header {
   display: flex;
   position: fixed;
+  justify-content: center;
   background-color: #0d0d0d;
  padding: 10px;
 }
 .fix-status {
-  background-color: #25D366;
-  display: flex;
   position: fixed; 
 }
 .padding{
-  padding-top: 70px;
+  padding-top: 60px;
 }
 .color:hover {
-  color: #128C7E;
-  background-color: #25D366;
-  width: 250px;
+  background-color: #1a1a1a;
 }
 .nav-bar {
 display: flex;
-background-color: #25D366;
 height: auto;
-min-height: 100vh;
+width: 100%;
+height: 95vh;
 }
 .nav-fixed {
   display: flex;
  margin:  5px;
  color: #001a00;
 }
-
+.nav-flex{
+  display: flex;
+  flex: 0.01;
+  background-color: #25D366;
+}
+.chats-flex{
+  display: flex;
+  flex: 0.6;
+  background-color: #0d0d0d;
+}
 .users-div{
   display: flex;
-  flex:  0.5;
   flex-direction: column;
-  background-color: #0d0d0d;
+  width: 100%;
+}
+.search-div{
+  margin: 0 5px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.search-USERS {
+  height: 25px;
+  color: aliceblue;
+  background-color: #1a1a1a;
 }
 .profile-div{
   font-size: 10px;

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { AllUsers, AllUsersType } from "../Context/AllUsers";
 import { useState } from "react";
 import Add from "../Images/no-image.png";
-import { UsersType } from "./../Type/UserType";
+import { UsersType } from "../Type/UserType";
 
 export const UserInformation = () => {
   const [information, setInformation] = useState<UsersType>();

@@ -20,7 +20,6 @@ import { ShowStatus } from "./Components/ShowStatus";
 import { EditProfile } from "./Components/EditProfile";
 import { Show, ShowType } from "./Context/Show";
 import { Welcome } from "./Components/Welcome";
-import { BsWhatsapp } from "react-icons/bs";
 
 export default function App() {
   const { docId } = useContext(User) as UserType;
@@ -34,8 +33,12 @@ export default function App() {
             <PostsProvider>
               {docId && (
                 <>
-                  <Navbar />
+                <div className="nav-flex">
+                <Navbar />
+                </div>
+                  <div className="chats-flex">
                   {show ? <Status /> : <Users />}
+                  </div>
                 </>
               )}
               <div className="container">

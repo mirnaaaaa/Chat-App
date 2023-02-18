@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { User, UserType } from "../Context/User";
 import { useEffect } from "react";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { auth, db } from "./../FirebaseConfig";
+import { auth, db } from "../FirebaseConfig";
 import { EachUser } from "./EachUser";
 import Search from "./Search";
 import { AllUsers, AllUsersType } from "../Context/AllUsers";
