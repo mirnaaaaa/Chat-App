@@ -12,15 +12,21 @@ scroll.current?.scrollIntoView({behavior: "smooth"})
   },[])
 
   return (
-    <div className="message-container" ref={scroll} >
-      <div className="right">
-        <h1 className={ message.from === user.displayName ? "user1" : "user2"}>
+    <div className={`message-container ${ message.from === user.displayName && "user"}`} ref={scroll} >
+      <div className="right" >
+        <div className="padding-text">
+        <span></span>
+        <div className={ message.from === user.displayName ? "user1" : "user2"}>
+        <h1 className="message-text">
           {message.text}
         </h1>
+        {message.photo && <img className="message-text" src={message.photo} alt="photos" />}
+        <span className="span"></span>
         <small className="time-message">
           <Moment  fromNow>{message.time.toDate()}</Moment>
         </small>
-        {message.photo && <img src={message.photo} alt="photos" />}
+        </div>
+      </div>
       </div>
     </div>
   );

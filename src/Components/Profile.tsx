@@ -44,7 +44,7 @@ export const Profile = () => {
   };
 
   return (
-    <div className="profile-div">
+    <div className="addStatus-div">
       {user && (
         <>
           <div className="log-profile">

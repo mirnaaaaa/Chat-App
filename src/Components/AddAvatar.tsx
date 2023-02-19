@@ -45,7 +45,7 @@ export const AddAvatar = () => {
   }, [avatar, docId, navigate]);
 
   return (
-    <div className="addAvatar">
+    <div className="addStatus-div">
       <input
         required
         style={{ display: "none" }}

@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { RiRadioButtonLine } from "react-icons/ri";
 import { UserData, UserDataType } from "../Context/UserData";
 import { UsersType } from "../Type/UserType";
-
 interface PostsProps {
   user: UsersType;
 }

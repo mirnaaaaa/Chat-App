@@ -17,9 +17,10 @@ export const EachUser = ({ eachUser }: PostsProps) => {
   const { user } = useContext(User) as UserType;
   const [last, setLast] = useState<any>();
 
-  const from = user.displayName;
-  const to = chat.map((x) => x.displayName);
+  const from = user.uid;
+  const to = chat.map((x) => x.uid);
   const id = from > to ? `${from + to}` : `${to + from}`;
+
 
   useEffect(() => {
     const snap = onSnapshot(doc(db, `lastMessage/${id}`), (x) => {
@@ -44,10 +45,11 @@ export const EachUser = ({ eachUser }: PostsProps) => {
         {last?.from === eachUser.displayName ? (
           <>
             <div className="lasTime">
-              <h1 className="last-message"> {last.text}</h1>
-              <small className="last-messageTime">
+            <small className="last-messageTime">
                 <Moment fromNow>{last.time.toDate()}</Moment>
               </small>
+              <h1 className="last-message"> {last.text}</h1>
+             
             </div>
           </>
         ) : (

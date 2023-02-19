@@ -64,6 +64,7 @@ export default function SignUp() {
           onChange={submitData}
           required
         />
+                <div className="loginData">
         <input
           className="loginEmail"
           placeholder="Enter your email"
@@ -73,6 +74,7 @@ export default function SignUp() {
           onChange={submitData}
           required
         />
+        </div>
         <input
           className="loginEmail"
           placeholder="Enter your password"

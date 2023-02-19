@@ -32,22 +32,21 @@ export default function Chat() {
     setPhoto(e.target.files[0]);
   };
 
-  const from = user.displayName;
-  const to = chat.map((x) => x.displayName);
+  const from = user.uid;
+  const to = chat.map((x) => x.uid);
   const id = from > to ? `${from + to}` : `${to + from}`;
-
   const sendMessage = async () => {
     if (text) {
       await addDoc(collection(db, "chats", id, "messages"), {
         text,
-        from,
-        to,
+        from: user.displayName,
+        to: chat.map((x) => x.displayName),
         time: Timestamp.now()
       });
       await setDoc(doc(db, "lastMessage", id), {
         text,
-        from,
-        to,
+        from: user.displayName,
+        to: chat.map((x) => x.displayName),
         time: Timestamp.now()
       });
       setText("");
@@ -59,14 +58,14 @@ export default function Chat() {
         getDownloadURL(imgRef).then(async (url) => {
           await addDoc(collection(db, "chats", id, "messages"), {
             photo: url,
-            from,
-            to,
+            from: user.displayName,
+            to: chat.map((x) => x.displayName),
             time: Timestamp.now()
           });
           await setDoc(doc(db, "lastMessage", id), {
             photo: url,
-            from,
-            to,
+            from: user.displayName,
+            to: chat.map((x) => x.displayName),
             time: Timestamp.now()
           });
         });
@@ -92,29 +91,33 @@ export default function Chat() {
 
   return (
     <div className="chat">
-      <div className="conversation">
-        <div className="show-message-better">
-          {chat &&
-            chat.map((x) => (
-              <div className="chat-header"  key={x.uid}>
+      <div className="fixed">
+        {chat &&
+          chat.map((x) => (
+            <div className="chat-header" key={x.uid}>
+              <div className="chat-div" key={x.uid}>
+                <img
+                  className="profile-chat"
+                  src={x.avatarPath}
+                  alt="Profile"
+                />
                 <Link className="link" to={`/UserInformation/${x.displayName}`}>
-                  <div className="chat-div" key={x.uid}>
-                    <img className="profile" src={x.avatarPath} alt="Profile" />
-                    <h1 className="user-name">{x.displayName}</h1>
-                    {user.isOnline ? (
-                      <div className="online-div">
-                        <RiRadioButtonLine className="online" />
-                      </div>
-                    ) : (
-                      <div className="online-div">
-                        <RiRadioButtonLine className="offline" />
-                      </div>
-                    )}
-                  </div>
+                  <h1 className="user-name">{x.displayName}</h1>
                 </Link>
+                {user.isOnline ? (
+                  <div className="online-div">
+                    <RiRadioButtonLine className="online" />
+                  </div>
+                ) : (
+                  <div className="online-div">
+                    <RiRadioButtonLine className="offline" />
+                  </div>
+                )}
               </div>
-            ))}
-        </div>
+            </div>
+          ))}
+      </div>
+      <div className="conversation">
         {chats &&
           chats.map((message: any) => (
             <div>

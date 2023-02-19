@@ -13,12 +13,12 @@ export default function Search() {
       collection(db, "users"),
       where("displayName", "==", userName)
     );
-    const Q = await getDocs(q);
-    let array: any = [];
-    Q.forEach((details) => {
-      array.push(details.data());
-    });
-    setUserDetails(array);
+      const Q = await getDocs(q);
+      let array: any = [];
+      Q.forEach((details) => {
+        array.push(details.data());
+        setUserDetails(array);
+      });
     setUserName("");
   };
 

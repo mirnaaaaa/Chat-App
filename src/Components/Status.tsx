@@ -1,13 +1,27 @@
-import React, { useContext } from "react";
+import { query, collection, orderBy, onSnapshot } from "firebase/firestore";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Posts, PostsType } from "../Context/Posts";
 import { User, UserType } from "../Context/User";
+import { db } from "../FirebaseConfig";
 import Add from "../Images/no-image.png";
 import { AllStatus } from "./AllStatus";
 
 export default function Status() {
-  const { posts } = useContext(Posts) as PostsType;
+  const { posts, setPosts } = useContext(Posts) as PostsType;
   const { user } = useContext(User) as UserType;
+
+  useEffect(() => {
+    const q = query(collection(db, `Posts`), orderBy("time", "asc"));
+    const update = onSnapshot(q, (snap) => {
+      let array: any = [];
+      snap.forEach((doc) => {
+        array.push({ ...doc.data(), Id: doc.id });
+      });
+      setPosts(array);
+    });
+    return () => update();
+  }, []);
 
   return (
     <div className="users-div">

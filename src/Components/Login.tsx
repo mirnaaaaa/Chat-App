@@ -54,7 +54,6 @@ export default function Login() {
     <div className="login">
       <ToastContainer />
       <div className="loginContainer">
-        <div className="loginData">
           <input
             className="loginEmail"
             placeholder="Enter your email"
@@ -63,7 +62,7 @@ export default function Login() {
             value={data.email}
             onChange={handleSubmit}
           />
-        </div>
+        <div className="loginData">
         <input
           className="loginPassword"
           placeholder="Enter your password"
@@ -72,6 +71,7 @@ export default function Login() {
           value={data.password}
           onChange={handleSubmit}
         />
+                </div>
         <div className="LOGINDiv">
           <button className="LOGIN" onClick={submit}>
             Login

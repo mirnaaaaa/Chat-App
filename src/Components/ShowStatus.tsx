@@ -6,10 +6,12 @@ import { PostType } from "../Context/Posts";
 import Moment from "react-moment";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
+import { User, UserType } from "../Context/User";
 
 export const ShowStatus = () => {
   const [post, setPost] = useState<PostType>();
   const { posts } = useContext(Posts) as PostsType;
+  const { docId } = useContext(User) as UserType;
 
   const { Id } = useParams();
 
@@ -18,7 +20,7 @@ export const ShowStatus = () => {
     if (correct) {
       setPost(correct);
     }
-  }, [Id, posts]);
+  }, [Id, posts, docId]);
 
   useEffect(() => {
     const seen = async () => {
@@ -30,7 +32,7 @@ export const ShowStatus = () => {
       }
     };
     seen();
-  }, [post, post?.Id]);
+  }, [post, Id]);
 
   return (
     <div className="addStatus-div">

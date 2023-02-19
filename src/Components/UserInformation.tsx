@@ -20,7 +20,7 @@ export const UserInformation = () => {
   }, [id, users]);
 
   return (
-    <div className="profile-div">
+    <div className="addStatus-div">
       {information && (
         <>
           <div className="log-profile">

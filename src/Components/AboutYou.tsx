@@ -24,7 +24,7 @@ export const AboutYou = () => {
   };
 
   return (
-    <div className="addAvatar">
+    <div className="addStatus-div">
       <h1 className="aboutYou">About you:</h1>
       <input
         className="loginPassword"
