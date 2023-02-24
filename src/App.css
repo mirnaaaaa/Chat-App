@@ -29,7 +29,20 @@ margin-bottom: 8px;
 .result{
 padding-top: 20px;
 }
+.yourself{
+color: #FFFFFF8c;
+font-size: 8px;
+display: flex;
+margin-top: 35px;
+margin-left: -45px;
 
+}
+.date {
+  font-size: 9px;
+  display: flex;
+  margin-top: -15px;
+  color: #757575;
+  }
 .time-message {
   font-size: 8px;
   height: 25px;
@@ -38,7 +51,7 @@ padding-top: 20px;
     color: var(--bubble-meta);
     line-height: 37px;
     margin-left: 10px;
-    margin-right: 5px;
+    padding: 4px;
 }
 .right {
   display: flex;
@@ -48,7 +61,8 @@ padding-top: 20px;
 .lasTime{
   display: flex;
   flex-direction: column;
-  margin-left: 8px;  
+  margin-left: 26px;
+   
 }
 .handle-lastMessage{
   display: flex;
@@ -274,6 +288,7 @@ background-color: #0d0d0d;
   padding: 5px;
   background-color: #0d0d0d;
   width: 100%;
+  border: none;
   color: aliceblue;
 }
 .yourMessage:hover {
@@ -441,11 +456,40 @@ cursor: pointer;
 .search {
   width: 100%;
 }
+.search-USER {
+  height: 25px;
+  color: aliceblue;
+  border: none;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 35px;
+  font-size: 11px;
+  border-radius: 8px;
+    background-color: #001a00;
+padding-left: 10px;
+}
 .search-USERS {
   height: 25px;
   color: aliceblue;
+  border: none;
   width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 35px;
+  font-size: 11px;
+  border-radius: 8px;
     background-color: #1a1a1a;
+padding-left: 10px;
+}
+.search-icon{
+  color: #757575;
+  font-size: 13px;
+  height: 25px;
+  margin-top: 4px;
+  margin-left: -18px;
 }
 .done-change:hover {
  cursor: pointer;
@@ -474,13 +518,6 @@ border-radius: 5px;
 .input {
   display: flex;
   margin-right: 15px;
-}
-.search-btn {
-  border-radius: 80px;
-  height: 25px;
-  margin-top: 2px;
-  margin-left: -48px;
-  font-size: 10px;
 }
 .hr{
   color: #a9a6a68c;
@@ -517,7 +554,6 @@ align-items: center;
 }
 .name-time {
   display: inline-block;
-
 }
 .status-name {
   font-size: 13px;
@@ -535,12 +571,19 @@ align-items: center;
   display: flex;
   padding-bottom: 5px;
 }
+.findFriends{
+  padding-left: 10px;
+  font-size: 14px;
+  color: #FFFFFF8c;
+  padding-top: 10px;
+}
 .time-status {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  padding-bottom: 40px;
+margin-top: -10px;
+padding-bottom: 15px;
+font-size: 9px;
+  color: #FFFFFF8c;
+  
 }
 .seeStatus {
   display: flex;
@@ -549,11 +592,7 @@ align-items: center;
   flex-direction: column;
   padding-top: 30px;
 }
-.date {
-font-size: 10px;
-display: flex;
-margin-top: -15px;
-}
+
 .handle-status {
   display: flex;
 }
@@ -661,7 +700,7 @@ padding: 15px 0px;
   font-size: 25px;
   color: #25D366;
   padding-left: 15px;
-  margin-top: 13px;
+  margin-top: -5px;
 }
 
 .BsChatQuote:hover{
@@ -711,6 +750,7 @@ height: 95vh;
   flex-direction: column;
   width: 100%;
 }
+
 .search-div{
   margin: 0 5px;
   display: flex;

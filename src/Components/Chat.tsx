@@ -17,13 +17,12 @@ import { AiOutlineUpload } from "react-icons/ai";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Messages } from "./Messages";
 import { Link } from "react-router-dom";
-import { TiArrowForwardOutline } from "react-icons/ti";
 
 export default function Chat() {
   const [text, setText] = useState<string | number>("");
   const [photo, setPhoto] = useState<any>(null);
-  const { chat, setChats, chats } = useContext(UserData) as UserDataType;
-  const { user } = useContext(User) as UserType;
+  const { setChats, chats, chat } = useContext(UserData) as UserDataType;
+  const { user, combined } = useContext(User) as UserType;
 
   const addFile = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (!e.target.files) {
@@ -33,20 +32,25 @@ export default function Chat() {
   };
 
   const from = user.uid;
-  const to = chat.map((x) => x.uid);
+  const to: any =
+    (!chat.userId && chat.uid) || user.uid === chat.userId
+      ? chat.uid
+      : chat.userId;
   const id = from > to ? `${from + to}` : `${to + from}`;
+
   const sendMessage = async () => {
     if (text) {
       await addDoc(collection(db, "chats", id, "messages"), {
         text,
         from: user.displayName,
-        to: chat.map((x) => x.displayName),
-        time: Timestamp.now()
+        to: chat.displayName,
+        time: Timestamp.now(),
+        Id: id
       });
       await setDoc(doc(db, "lastMessage", id), {
         text,
         from: user.displayName,
-        to: chat.map((x) => x.displayName),
+        to: chat.displayName,
         time: Timestamp.now()
       });
       setText("");
@@ -59,14 +63,15 @@ export default function Chat() {
           await addDoc(collection(db, "chats", id, "messages"), {
             photo: url,
             from: user.displayName,
-            to: chat.map((x) => x.displayName),
+            to: chat.displayName,
             time: Timestamp.now()
           });
           await setDoc(doc(db, "lastMessage", id), {
             photo: url,
             from: user.displayName,
-            to: chat.map((x) => x.displayName),
-            time: Timestamp.now()
+            to: chat.displayName,
+            time: Timestamp.now(),
+            read: false
           });
         });
       });
@@ -75,10 +80,7 @@ export default function Chat() {
   };
 
   useEffect(() => {
-    const q = query(
-      collection(db, `chats/${id}/messages`),
-      orderBy("time", "asc")
-    );
+    const q = query(collection(db, `chats/${id}/messages`), orderBy("time"));
     const snap = onSnapshot(q, (snap) => {
       let array: any = [];
       snap.forEach((doc) => {
@@ -89,38 +91,44 @@ export default function Chat() {
     return () => snap();
   }, [id, setChats]);
 
+  const sent = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    e.code === "Enter" && sendMessage();
+  };
+
   return (
     <div className="chat">
       <div className="fixed">
-        {chat &&
-          chat.map((x) => (
-            <div className="chat-header" key={x.uid}>
-              <div className="chat-div" key={x.uid}>
-                <img
-                  className="profile-chat"
-                  src={x.avatarPath}
-                  alt="Profile"
-                />
-                <Link className="link" to={`/UserInformation/${x.displayName}`}>
-                  <h1 className="user-name">{x.displayName}</h1>
-                </Link>
-                {user.isOnline ? (
-                  <div className="online-div">
-                    <RiRadioButtonLine className="online" />
-                  </div>
-                ) : (
-                  <div className="online-div">
-                    <RiRadioButtonLine className="offline" />
-                  </div>
-                )}
-              </div>
+        {chat && (
+          <div className="chat-header">
+            <div className="chat-div" key={chat.uid}>
+              <img
+                className="profile-chat"
+                src={
+                  chat.userId === user.uid ? chat.avatarpath : chat.avatarPath
+                }
+                alt="Profile"
+              />
+              <div className="name-time"></div>
+              <Link
+                className="link"
+                to={`/UserInformation/${
+                  chat.userId === user.uid ? chat.displayname : chat.displayName
+                }`}
+              >
+                <h1 className="user-name">
+                  {chat.userId === user.uid
+                    ? chat.displayname
+                    : chat.displayName}
+                </h1>
+              </Link>
             </div>
-          ))}
+          </div>
+        )}
       </div>
       <div className="conversation">
         {chats &&
           chats.map((message: any) => (
-            <div>
+            <div key={message.Id}>
               <Messages message={message} />
             </div>
           ))}
@@ -141,9 +149,9 @@ export default function Chat() {
             placeholder="Type a message"
             name="text"
             value={text}
+            onKeyDown={sent}
             onChange={(e) => setText(e.target.value)}
           />
-          <TiArrowForwardOutline className="btn-send" onClick={sendMessage} />
         </div>
       </div>
     </div>

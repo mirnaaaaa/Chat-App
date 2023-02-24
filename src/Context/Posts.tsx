@@ -10,7 +10,7 @@ export interface PostType {
   photo: any;
   image?: string;
   name: number | string;
-  time: any;
+  time: string | number | any;
   Id:any;
   Seen: boolean;
 }

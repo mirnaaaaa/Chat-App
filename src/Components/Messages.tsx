@@ -12,7 +12,7 @@ scroll.current?.scrollIntoView({behavior: "smooth"})
   },[])
 
   return (
-    <div className={`message-container ${ message.from === user.displayName && "user"}`} ref={scroll} >
+    <div  className={`message-container ${ message.from === user.displayName && "user"}`} ref={scroll} >
       <div className="right" >
         <div className="padding-text">
         <span></span>

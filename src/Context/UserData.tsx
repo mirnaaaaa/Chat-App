@@ -7,7 +7,7 @@ interface ChildrenType {
 }
 export interface UserDataType {
   startChat: (user: UsersType) => void;
-  chat: UsersType[];
+  chat: UsersType;
   setChats: React.Dispatch<any>;
   chats: any;
 }
@@ -17,16 +17,17 @@ interface ChatsType {
   time: any;
   text?: string | number;
   image?: string;
+  Id: string | number;
 }
 
 export const UserData = createContext<UserDataType | null>(null);
 
 export const UserDataProvider = ({ children }: ChildrenType) => {
-  const [chat, setChat] = useState<UsersType[]>(() => {
+  const [chat, setChat] = useState<UsersType>(() => {
     const storedValues = localStorage.getItem("chat");
     return storedValues ? JSON.parse(storedValues) : [];
   });
-  
+
   const [chats, setChats] = useState<ChatsType[]>([]);
 
   let navigate = useNavigate();
@@ -43,7 +44,7 @@ export const UserDataProvider = ({ children }: ChildrenType) => {
   }, []);
 
   const startChat = (user: UsersType): void => {
-    setChat([user]);
+    setChat(user);
     navigate("/Chat");
   };
 

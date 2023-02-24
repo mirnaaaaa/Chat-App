@@ -26,7 +26,6 @@ export default function Users() {
 
   return (
     <div className="users-div">
-      <Search />
       <div className="push-search">
         {!docId ? (
           <h1>Login first</h1>

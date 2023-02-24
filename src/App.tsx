@@ -1,6 +1,5 @@
 import "./App.css";
 import React, { useContext } from "react";
-import Users from "./Components/Users";
 import Navbar from "./Components/Navbar";
 import SignUp from "./Components/SignUp";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -20,6 +19,7 @@ import { ShowStatus } from "./Components/ShowStatus";
 import { EditProfile } from "./Components/EditProfile";
 import { Show, ShowType } from "./Context/Show";
 import { Welcome } from "./Components/Welcome";
+import { Chats } from "./Components/Chats";
 
 export default function App() {
   const { docId } = useContext(User) as UserType;
@@ -33,11 +33,11 @@ export default function App() {
             <PostsProvider>
               {docId && (
                 <>
-                <div className="nav-flex">
-                <Navbar />
-                </div>
+                  <div className="nav-flex">
+                    <Navbar />
+                  </div>
                   <div className="chats-flex">
-                  {show ? <Status /> : <Users />}
+                    {show ? <Status /> : <Chats />}
                   </div>
                 </>
               )}

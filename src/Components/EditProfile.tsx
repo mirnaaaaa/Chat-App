@@ -56,7 +56,7 @@ export const EditProfile = () => {
   }, [avatar, docId, navigate, user.avatarPath]);
 
   return (
-    <div className="users-div">
+    <div className="addStatus-div">
       <input
         required
         style={{ display: "none" }}

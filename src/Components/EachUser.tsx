@@ -13,14 +13,13 @@ interface PostsProps {
 }
 
 export const EachUser = ({ eachUser }: PostsProps) => {
-  const { startChat, chat } = useContext(UserData) as UserDataType;
+  const { chat } = useContext(UserData) as UserDataType;
   const { user } = useContext(User) as UserType;
   const [last, setLast] = useState<any>();
 
   const from = user.uid;
-  const to = chat.map((x) => x.uid);
+  const to = chat.uid;
   const id = from > to ? `${from + to}` : `${to + from}`;
-
 
   useEffect(() => {
     const snap = onSnapshot(doc(db, `lastMessage/${id}`), (x) => {
@@ -29,33 +28,38 @@ export const EachUser = ({ eachUser }: PostsProps) => {
       }
     });
     return () => snap();
-  }, [id, setLast]);
+  }, [id, last]);
 
   return (
-    <div className="user-div" onClick={() => startChat(eachUser)}>
-      <div className={last?.from === eachUser.displayName ? "handle-lastMessage" : "handle-lastMessages" }>
+    <div className="user-div">
+      <div
+        className={
+          last?.from === eachUser.displayName
+            ? "handle-lastMessage"
+            : "handle-lastMessages"
+        }
+      >
         <div className="handleSpace">
-        <img className="profile" src={eachUser.avatarPath} alt="profile" />
-        <h1 className="user-name">{eachUser.displayName}</h1>
-        <div className="online-div">
-          <RiRadioButtonLine
-            className={eachUser.isOnline ? "online" : "offline"}
-          />
+          <img className="profile" src={eachUser.avatarPath} alt="profile" />
+          <h1 className="user-name">{eachUser.displayName}</h1>
+          <div className="online-div">
+            <RiRadioButtonLine
+              className={eachUser.isOnline ? "online" : "offline"}
+            />
+          </div>
+          {last?.from === eachUser.displayName ? (
+            <>
+              <div className="lasTime">
+                <small className="last-messageTime">
+                  <Moment fromNow>{last.time.toDate()}</Moment>
+                </small>
+                <h1 className="last-message"> {last.text}</h1>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
-        {last?.from === eachUser.displayName ? (
-          <>
-            <div className="lasTime">
-            <small className="last-messageTime">
-                <Moment fromNow>{last.time.toDate()}</Moment>
-              </small>
-              <h1 className="last-message"> {last.text}</h1>
-             
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
-      </div>
       </div>
     </div>
   );

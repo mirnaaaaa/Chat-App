@@ -1,4 +1,4 @@
-import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useContext } from "react";
 import { useState } from "react";
@@ -22,7 +22,7 @@ export const AddStatus = () => {
     if (text) {
       await addDoc(collection(db, "Posts"), {
         text,
-        time: Timestamp.now(),
+        time: serverTimestamp(),
         name: user.displayName,
         image: user.avatarPath,
         Seen: false
@@ -36,7 +36,7 @@ export const AddStatus = () => {
         getDownloadURL(imgRef).then(async (url) => {
           await addDoc(collection(db, "Posts"), {
             photo: url,
-            time: Timestamp.now(),
+            time: serverTimestamp(),
             name: user.displayName,
             image: user.avatarPath,
             Seen: false

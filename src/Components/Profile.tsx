@@ -68,7 +68,7 @@ export const Profile = () => {
                 <input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="search-USERS"
+                  className="search-USER"
                 />
                 <button className="done-change" onClick={change}>
                   Change
@@ -89,7 +89,7 @@ export const Profile = () => {
             {editAbout ? (
               <>
                 <input
-                  className="search-USERS"
+                  className="search-USER"
                   value={changeAbout}
                   onChange={(e) => setChangeAbout(e.target.value)}
                 />

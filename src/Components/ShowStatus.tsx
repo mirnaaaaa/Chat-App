@@ -11,7 +11,7 @@ import { User, UserType } from "../Context/User";
 export const ShowStatus = () => {
   const [post, setPost] = useState<PostType>();
   const { posts } = useContext(Posts) as PostsType;
-  const { docId } = useContext(User) as UserType;
+  const { docId, user } = useContext(User) as UserType;
 
   const { Id } = useParams();
 
@@ -25,7 +25,7 @@ export const ShowStatus = () => {
   useEffect(() => {
     const seen = async () => {
       const id = post?.Id;
-      if (post) {
+      if (post && post.name !== user.displayName) {
         updateDoc(doc(db, "Posts", id), {
           Seen: true
         });
@@ -41,11 +41,13 @@ export const ShowStatus = () => {
           <div>
             <div className="flex">
               <img className="profile" src={post.image} alt="Profile" />
-              <p className="user-status">{post.name}</p>
+              <div className="name-time">
+                <p className="user-status">{post.name}</p>
+                <small className="time-status">
+                  <Moment fromNow>{post.time.toDate()}</Moment>
+                </small>
+              </div>
             </div>
-            <small className="time-status">
-              <Moment fromNow>{post.time}</Moment>
-            </small>
           </div>
           <div className="style-status">
             {post.text && <p>{post.text}</p>}
