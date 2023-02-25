@@ -6,58 +6,51 @@ import {
   getDocs,
   doc,
   getDoc,
-  setDoc
+  setDoc,
+  onSnapshot
 } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
 import { SearchResult } from "./SearchResult";
 import { User, UserType } from "../Context/User";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
+import { GiThreeFriends } from "react-icons/gi";
+import { UserData, UserDataType } from "../Context/UserData";
 
 export default function Search() {
-  const [userName, setUserName] = useState<string | number>();
-  const { user, userDetails, setUserDetails, setCombined } = useContext(
+  const [userName, setUserName,] = useState<string | number>();
+  const { user, userDetails, setUserDetails, setCombined,  } = useContext(
     User
   ) as UserType;
-
+  
   let navigate = useNavigate();
 
   const searchUser = async () => {
-    const q = query(
-      collection(db, "users"),
-      where("displayName", "==", userName)
-    );
-    const Q = await getDocs(q);
-    Q.forEach((details) => {
-      setUserDetails(details.data());
-      setCombined(details.data());
-    });
-    setUserName("");
+    const usersRef = collection(db, "users");
+    const q = query(usersRef, where("displayName", "==", userName)    );
+     onSnapshot(q, (snap) => {
+      let array: any = [];
+      snap.forEach((user) => {
+        array.push(user.data());
+      });
+      setUserDetails(array);
+      setCombined(array)
+    })
+     setUserName("");
   };
 
-  const from = user.uid;
-  const to = userDetails?.uid;
-  const id = from > to ? `${from + to}` : `${to + from}`;
 
-  const startChats = async () => {
+const startChats = async (x: any) => {
+  const from = user.uid;
+  const to = x;
+  const id = from > to ? `${from + to}` : `${to + from}`;
+console.log(id)
     const get = await getDoc(doc(db, "chats", id));
     if(from === to) return
     if (!get.exists()) {
-      await setDoc(doc(db, "chat", id), {
-        displayName: user?.displayName,
-        avatarPath: user?.avatarPath,
-        isOnline: user?.isOnline,
-        userId: user.uid,
-        uid: userDetails?.uid,
-        displayname: userDetails?.displayName,
-        avatarpath: userDetails?.avatarPath,
-        isonline: userDetails?.isOnline,
-        combined: id
-      });
-    }
     navigate("/Chat");
     setUserDetails("");
-  };
+  }};
 
   const enter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.code === "Enter" && searchUser();
@@ -66,7 +59,12 @@ export default function Search() {
   return (
     <div className="search-div">
       <div className="search">
+        <div className="allFriend">
         <h1 className="users">Chats</h1>
+        <Link className="link" to="/Users">
+        <GiThreeFriends className="GiThreeFriends" />
+        </Link>
+        </div>
         <div className="input">
           <input
             className="search-USERS"
@@ -81,11 +79,12 @@ export default function Search() {
         </div>
       </div>
       <div className="search-result">
-        {userDetails && (
+        {userDetails &&userDetails.map((details: any) => (
           <div>
-            <SearchResult userDetails={userDetails} startChats={startChats} />
+            <SearchResult details={details} startChats={startChats} />
           </div>
-        )}
+        ))}
+              <div className="line"></div>
       </div>
     </div>
   );

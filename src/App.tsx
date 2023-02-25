@@ -20,6 +20,7 @@ import { EditProfile } from "./Components/EditProfile";
 import { Show, ShowType } from "./Context/Show";
 import { Welcome } from "./Components/Welcome";
 import { Chats } from "./Components/Chats";
+import Users from "./Components/Users";
 
 export default function App() {
   const { docId } = useContext(User) as UserType;
@@ -44,6 +45,7 @@ export default function App() {
               <div className="container">
                 <Routes>
                   <Route path="/" element={<Welcome />} />
+                  <Route path="/Users" element={<Users />} />
                   <Route path="/SignUp" element={<SignUp />} />
                   <Route path="/Profile" element={<Profile />} />
                   <Route path="/Login" element={<Login />} />

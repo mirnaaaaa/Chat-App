@@ -27,7 +27,6 @@ export const UserDataProvider = ({ children }: ChildrenType) => {
     const storedValues = localStorage.getItem("chat");
     return storedValues ? JSON.parse(storedValues) : [];
   });
-
   const [chats, setChats] = useState<ChatsType[]>([]);
 
   let navigate = useNavigate();

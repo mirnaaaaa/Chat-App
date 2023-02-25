@@ -1,44 +1,41 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { RiRadioButtonLine } from "react-icons/ri";
 import { UsersType } from "../Type/UserType";
 import { UserData } from "../Context/UserData";
 import { UserDataType } from "../Context/UserData";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
 import { User, UserType } from "../Context/User";
-import Moment from "react-moment";
+import { useNavigate } from "react-router-dom";
 
 interface PostsProps {
   eachUser: UsersType;
 }
 
 export const EachUser = ({ eachUser }: PostsProps) => {
-  const { chat } = useContext(UserData) as UserDataType;
-  const { user } = useContext(User) as UserType;
-  const [last, setLast] = useState<any>();
+  const { startChat } = useContext(UserData) as UserDataType;
+  const { user, setUserDetails } = useContext(User) as UserType;
 
-  const from = user.uid;
-  const to = chat.uid;
-  const id = from > to ? `${from + to}` : `${to + from}`;
+  let navigate = useNavigate();
 
-  useEffect(() => {
-    const snap = onSnapshot(doc(db, `lastMessage/${id}`), (x) => {
-      if (x.exists()) {
-        setLast({ ...x.data() });
-      }
-    });
-    return () => snap();
-  }, [id, last]);
+  const startChats = async (x: any) => {
+    const from = user.uid;
+    const to = x;
+    const id = from > to ? `${from + to}` : `${to + from}`;
+
+      await getDoc(doc(db, "chats", id));
+      if(from === to) return
+      navigate("/Chat");
+      setUserDetails("");
+    }
 
   return (
-    <div className="user-div">
+    <div className="user-div"
+     onClick={() => startChat(eachUser)}
+     >
       <div
-        className={
-          last?.from === eachUser.displayName
-            ? "handle-lastMessage"
-            : "handle-lastMessages"
-        }
-      >
+       onClick={() =>startChats(eachUser.uid)}
+       >
         <div className="handleSpace">
           <img className="profile" src={eachUser.avatarPath} alt="profile" />
           <h1 className="user-name">{eachUser.displayName}</h1>
@@ -47,18 +44,6 @@ export const EachUser = ({ eachUser }: PostsProps) => {
               className={eachUser.isOnline ? "online" : "offline"}
             />
           </div>
-          {last?.from === eachUser.displayName ? (
-            <>
-              <div className="lasTime">
-                <small className="last-messageTime">
-                  <Moment fromNow>{last.time.toDate()}</Moment>
-                </small>
-                <h1 className="last-message"> {last.text}</h1>
-              </div>
-            </>
-          ) : (
-            <></>
-          )}
         </div>
       </div>
     </div>

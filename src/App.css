@@ -26,9 +26,6 @@ display: flex;
 width: 100%;
 margin-bottom: 8px;
 }
-.result{
-padding-top: 20px;
-}
 .yourself{
 color: #FFFFFF8c;
 font-size: 8px;
@@ -444,7 +441,8 @@ cursor: pointer;
   cursor: pointer;
 }
 .allUsers {
-  padding: 15px 5px;
+  padding: 15px 0;
+  margin-left: -30px;
 }
 .online-div {
   display: flex;
@@ -707,9 +705,6 @@ padding: 15px 0px;
   color: #001a00;
   cursor: pointer;
 }
-.fixed{
-
-}
 .chat-header {
   display: flex;
   background-color: #0d0d0d;
@@ -750,7 +745,30 @@ height: 95vh;
   flex-direction: column;
   width: 100%;
 }
-
+.allFriend{
+  display: flex;
+  justify-content: space-between;
+}
+.GiThreeFriends{
+  margin-right: 25px;
+  margin-top: 16px;
+}
+.friends{
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+.allRegistered{
+  display: flex;
+  width: 100%;
+justify-content: center;
+}
+.GiThreeFriends:hover{
+  cursor: pointer;
+  background-color: #25D366;
+  color: black;
+  border-radius: 6px;
+}
 .search-div{
   margin: 0 5px;
   display: flex;

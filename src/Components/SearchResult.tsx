@@ -3,18 +3,18 @@ import { RiRadioButtonLine } from "react-icons/ri";
 import { UserData, UserDataType } from "../Context/UserData";
 import { UsersType } from "../Type/UserType";
 interface PostsProps {
-  userDetails: UsersType;
-  startChats: () => void;
+  details: any;
+  startChats: (x:  React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
-export const SearchResult = ({ userDetails, startChats }: PostsProps) => {
+export const SearchResult = ({ details, startChats }: PostsProps) => {
   const { startChat } = useContext(UserData) as UserDataType;
 
   return (
-    <div className="result" onClick={() => startChat(userDetails)}>
-      <div className="user-div" onClick={startChats}>
-        <img className="profile" src={userDetails?.avatarPath} alt="profile" />
-        <h1 className="user-name">{userDetails?.displayName}</h1>
-        {userDetails.isOnline ? (
+    <div className="result" onClick={() => startChat(details)}>
+      <div className="user-div" onClick={() => startChats(details.uid)}>
+        <img className="profile" src={details?.avatarPath} alt="profile" />
+        <h1 className="user-name">{details?.displayName}</h1>
+        {details.isOnline ? (
           <div className="online-div">
             <RiRadioButtonLine className="online" />
           </div>
@@ -24,7 +24,6 @@ export const SearchResult = ({ userDetails, startChats }: PostsProps) => {
           </div>
         )}
       </div>
-      <div className="line"></div>
     </div>
   );
 };

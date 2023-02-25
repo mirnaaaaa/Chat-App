@@ -1,11 +1,10 @@
-import { collection, query, onSnapshot, doc, getDoc } from "firebase/firestore";
-import React, { useContext } from "react";
+import { collection, query, onSnapshot } from "firebase/firestore";
+import React from "react";
 import { useEffect } from "react";
 import { db } from "../FirebaseConfig";
 import { useState } from "react";
 import { AllChats } from "./AllChats";
 import Search from "./Search";
-import { User, UserType } from "../Context/User";
 
 export const Chats = () => {
   const [chats, setChats] = useState<any>([]);

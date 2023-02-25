@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { auth, db } from "../FirebaseConfig";
 import { EachUser } from "./EachUser";
-import Search from "./Search";
 import { AllUsers, AllUsersType } from "../Context/AllUsers";
 
 export default function Users() {
@@ -21,12 +20,14 @@ export default function Users() {
       });
       setUsers(array);
     });
-    return () => getUsers();
+
+    return () => {auth.currentUser?.uid && getUsers()};
   }, []);
 
   return (
-    <div className="users-div">
+    <div className="allRegistered">
       <div className="push-search">
+      <h1 className="friends">All users</h1>
         {!docId ? (
           <h1>Login first</h1>
         ) : (

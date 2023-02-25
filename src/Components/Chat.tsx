@@ -2,6 +2,7 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   onSnapshot,
   orderBy,
   query,
@@ -9,7 +10,6 @@ import {
   Timestamp
 } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
-import { RiRadioButtonLine } from "react-icons/ri";
 import { User, UserType } from "../Context/User";
 import { UserData, UserDataType } from "../Context/UserData";
 import { db, storage } from "../FirebaseConfig";
@@ -22,7 +22,7 @@ export default function Chat() {
   const [text, setText] = useState<string | number>("");
   const [photo, setPhoto] = useState<any>(null);
   const { setChats, chats, chat } = useContext(UserData) as UserDataType;
-  const { user, combined } = useContext(User) as UserType;
+  const { user } = useContext(User) as UserType;
 
   const addFile = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (!e.target.files) {
@@ -40,19 +40,63 @@ export default function Chat() {
 
   const sendMessage = async () => {
     if (text) {
-      await addDoc(collection(db, "chats", id, "messages"), {
-        text,
-        from: user.displayName,
-        to: chat.displayName,
-        time: Timestamp.now(),
-        Id: id
-      });
-      await setDoc(doc(db, "lastMessage", id), {
-        text,
-        from: user.displayName,
-        to: chat.displayName,
-        time: Timestamp.now()
-      });
+      const get = await getDoc(doc(db, "chat", id));
+      if (get.exists() && chat.displayname) {
+        await addDoc(collection(db, "chats", id, "messages"), {
+          text,
+          from: user.displayName,
+          to: chat.displayname,
+          time: Timestamp.now(),
+          Id: id
+        });
+        await setDoc(doc(db, "lastMessage", id), {
+          text,
+          from: user.displayName,
+          to: chat.displayname,
+          time: Timestamp.now()
+        });
+      }  if (get.exists() && !chat.displayname) {
+        await addDoc(collection(db, "chats", id, "messages"), {
+          text,
+          from: user.displayName,
+          to: chat.displayName,
+          time: Timestamp.now(),
+          Id: id
+        });
+        await setDoc(doc(db, "lastMessage", id), {
+          text,
+          from: user.displayName,
+          to: chat.displayName,
+          time: Timestamp.now()
+        });
+      }
+
+      if (!get.exists()) {
+        await setDoc(doc(db, "chat", id), {
+          displayName: user?.displayName,
+          avatarPath: user?.avatarPath,
+          isOnline: user?.isOnline,
+          userId: user.uid,
+          uid: chat?.uid,
+          displayname: chat?.displayName,
+          avatarpath: chat?.avatarPath,
+          isonline: chat?.isOnline,
+          combined: id
+        });
+        await addDoc(collection(db, "chats", id, "messages"), {
+          text,
+          from: user.displayName,
+          to: chat.displayName,
+          time: Timestamp.now(),
+          Id: id
+        });
+        await setDoc(doc(db, "lastMessage", id), {
+          text,
+          from: user.displayName,
+          to: chat.displayName,
+          time: Timestamp.now()
+        });
+      }
       setText("");
     }
     if (photo) {
