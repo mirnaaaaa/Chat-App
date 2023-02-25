@@ -17,9 +17,6 @@ export const Profile = () => {
   let navigate = useNavigate();
   
   const handleLogout = async () => {
-    updateDoc(doc(db, "users", docId), {
-      isOnline: false
-    });
     await signOut(auth).then(() => {
       navigate("/Login");
     });

@@ -7,7 +7,7 @@ import { db, storage } from "../FirebaseConfig";
 import { FcAddImage } from "react-icons/fc";
 
 export const AddAvatar = () => {
-  const [avatar, setAvatar] = useState<any>(null);
+  const [avatar, setAvatar] = useState<File | null>(null);
   const { docId } = useContext(User) as UserType;
 
   let navigate = useNavigate();

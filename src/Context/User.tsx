@@ -10,11 +10,7 @@ export interface UserType {
   isLoading: boolean;
   docId: any;
   user: any;
-  setUserDetails: React.Dispatch<any>;
   setUser: React.Dispatch<any>;
-  userDetails: any;
-  setCombined: React.Dispatch<any>;
-  combined: any;
 }
 export const User = createContext<UserType | null>(null);
 
@@ -25,21 +21,6 @@ export const UserProvider = ({ children }: ChildrenType) => {
     const storedValues = localStorage.getItem("user");
     return storedValues ? JSON.parse(storedValues) : [];
   });
-  const [userDetails, setUserDetails] = useState<any>();
-  const [combined, setCombined] = useState<any>(() => {
-    const storedValues = localStorage.getItem("combined");
-    return storedValues ? JSON.parse(storedValues) : [];
-  });
-  useEffect(() => {
-    localStorage.setItem("combined", JSON.stringify(combined));
-  }, [combined]);
-
-  useEffect(() => {
-    const handle = localStorage.getItem("combined");
-    if (handle) {
-      setCombined(JSON.parse(handle));
-    }
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
@@ -75,11 +56,7 @@ export const UserProvider = ({ children }: ChildrenType) => {
     isLoading,
     docId,
     user,
-    setUser,
-    setUserDetails,
-    userDetails,
-    setCombined,
-    combined
+    setUser
   };
 
   return <User.Provider value={value}>{children}</User.Provider>;

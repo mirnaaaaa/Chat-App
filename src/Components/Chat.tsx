@@ -6,6 +6,7 @@ import {
   onSnapshot,
   orderBy,
   query,
+  serverTimestamp,
   setDoc,
   Timestamp
 } from "firebase/firestore";
@@ -17,10 +18,12 @@ import { AiOutlineUpload } from "react-icons/ai";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Messages } from "./Messages";
 import { Link } from "react-router-dom";
+import { UsersType } from "./../Type/UserType";
+import { ChatsType } from './../Type/ChatsType';
 
 export default function Chat() {
   const [text, setText] = useState<string | number>("");
-  const [photo, setPhoto] = useState<any>(null);
+  const [photo, setPhoto] = useState<File | undefined>();
   const { setChats, chats, chat } = useContext(UserData) as UserDataType;
   const { user } = useContext(User) as UserType;
 
@@ -55,7 +58,8 @@ export default function Chat() {
           to: chat.displayname,
           time: Timestamp.now()
         });
-      }  if (get.exists() && !chat.displayname) {
+      }
+      if (get.exists() && !chat.displayname) {
         await addDoc(collection(db, "chats", id, "messages"), {
           text,
           from: user.displayName,
@@ -75,13 +79,12 @@ export default function Chat() {
         await setDoc(doc(db, "chat", id), {
           displayName: user?.displayName,
           avatarPath: user?.avatarPath,
-          isOnline: user?.isOnline,
           userId: user.uid,
           uid: chat?.uid,
           displayname: chat?.displayName,
           avatarpath: chat?.avatarPath,
-          isonline: chat?.isOnline,
-          combined: id
+          combined: id,
+          time: serverTimestamp(),
         });
         await addDoc(collection(db, "chats", id, "messages"), {
           text,
@@ -119,7 +122,7 @@ export default function Chat() {
           });
         });
       });
-      setPhoto(null);
+      setPhoto(undefined);
     }
   };
 
@@ -171,7 +174,7 @@ export default function Chat() {
       </div>
       <div className="conversation">
         {chats &&
-          chats.map((message: any) => (
+          chats.map((message: ChatsType) => (
             <div key={message.Id}>
               <Messages message={message} />
             </div>

@@ -1,28 +1,30 @@
 import { onSnapshot, doc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
-import { RiRadioButtonLine } from "react-icons/ri";
 import Moment from "react-moment";
 import { User, UserType } from "../Context/User";
 import { UserData, UserDataType } from "../Context/UserData";
 import { db } from "../FirebaseConfig";
+import { ChatsType } from "../Type/ChatsType";
+import { UsersType } from "../Type/UserType";
 
 interface ChatType {
-  USER: any;
+  USER: UsersType;
 }
 
 export const AllChats = ({ USER }: ChatType) => {
-  const [last, setLast] = useState<any>();
+  const [last, setLast] = useState<ChatsType>();
   const { startChat } = useContext(UserData) as UserDataType;
   const { user } = useContext(User) as UserType;
 
   const from = user.uid;
-  const to = user.uid === USER.userId ? USER.uid : USER.userId;
+  const to: any = user.uid === USER.userId ? USER.uid : USER.userId;
   const id = from > to ? `${from + to}` : `${to + from}`;
 
   useEffect(() => {
     const snap = onSnapshot(doc(db, `lastMessage/${id}`), (x) => {
       if (x.exists()) {
-        setLast({ ...x.data() });
+        const L: any = { ...x.data() };
+        setLast(L);
       }
     });
     return () => snap();
@@ -43,21 +45,27 @@ export const AllChats = ({ USER }: ChatType) => {
                     src={USER.avatarpath}
                     alt="profile"
                   />
-                  <h1 className="user-name">{USER.displayname}</h1>
-                  {
-                    //last?.to !== USER.displayname ? (
-                    // <>
-                    //<div className="lasTime">
-                    //<small className="last-messageTime">
-                    // <Moment fromNow>{last.time.toDate()}</Moment>
-                    //</small>
-                    //<h1 className="last-message"> {last.text}</h1>
-                    //</div>
-                    // </>
-                    //) : (
-                    /// <></>
-                    //)
-                  }
+                  <div className="lasTime">
+                    <div className="flex-grow">
+                      <h1 className="user-name">{USER.displayname}</h1>
+                      {last?.to === USER.displayname ? (
+                        <>
+                          <h1 className="last-message"> {last?.text}</h1>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  </div>
+                  {last?.to === USER.displayname ? (
+                    <>
+                      <small className="last-messageTime">
+                        <Moment fromNow>{last?.time.toDate()}</Moment>
+                      </small>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </>
               ) : (
                 <>
@@ -66,21 +74,27 @@ export const AllChats = ({ USER }: ChatType) => {
                     src={USER.avatarPath}
                     alt="profile"
                   />
-                  <h1 className="user-name">{USER.displayName}</h1>
-                  {
-                    //last?.to === USER.displayname ? (
-                    //<>
-                    //<div className="lasTime">
-                    //<small className="last-messageTime">
-                    //<Moment fromNow>{last.time.toDate()}</Moment>
-                    ////  </small>
-                    //<h1 className="last-message"> {last.text}</h1>
-                    //</div>
-                    // </>
-                    //) : (
-                    // <></>
-                    //)
-                  }
+                  <div className="lasTime">
+                    <div className="flex-grow">
+                      <h1 className="user-name">{USER.displayName}</h1>
+                      {last?.to === USER.displayname ? (
+                        <>
+                          <h1 className="last-message"> {last?.text}</h1>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  </div>
+                  {last?.to === USER.displayname ? (
+                    <>
+                      <small className="last-messageTime">
+                        <Moment fromNow>{last?.time.toDate()}</Moment>
+                      </small>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </>
               )}
             </>

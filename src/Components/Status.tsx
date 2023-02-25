@@ -12,7 +12,7 @@ export default function Status() {
   const { user } = useContext(User) as UserType;
 
   useEffect(() => {
-    const q = query(collection(db, `Posts`), orderBy("time", "asc"));
+    const q = query(collection(db, `Posts`), orderBy("time", "desc"));
     const update = onSnapshot(q, (snap) => {
       let array: any = [];
       snap.forEach((doc) => {
@@ -21,7 +21,7 @@ export default function Status() {
       setPosts(array);
     });
     return () => update();
-  }, []);
+  }, [setPosts]);
 
   return (
     <div className="users-div">

@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { UsersType } from "../Type/UserType";
 import { useNavigate } from "react-router-dom";
+import { ChatsType } from "../Type/ChatsType";
 
 interface ChildrenType {
   children: React.ReactNode;
@@ -10,14 +11,8 @@ export interface UserDataType {
   chat: UsersType;
   setChats: React.Dispatch<any>;
   chats: any;
-}
-interface ChatsType {
-  to: string | number;
-  from: string | number;
-  time: any;
-  text?: string | number;
-  image?: string;
-  Id: string | number;
+  setUserDetails: React.Dispatch<UsersType[]>;
+  userDetails: UsersType[] ;
 }
 
 export const UserData = createContext<UserDataType | null>(null);
@@ -28,6 +23,7 @@ export const UserDataProvider = ({ children }: ChildrenType) => {
     return storedValues ? JSON.parse(storedValues) : [];
   });
   const [chats, setChats] = useState<ChatsType[]>([]);
+  const [userDetails, setUserDetails] = useState<UsersType[]>([]);
 
   let navigate = useNavigate();
 
@@ -51,7 +47,9 @@ export const UserDataProvider = ({ children }: ChildrenType) => {
     startChat,
     chat,
     setChats,
-    chats
+    chats,
+    setUserDetails,
+    userDetails
   };
 
   return <UserData.Provider value={value}>{children}</UserData.Provider>;

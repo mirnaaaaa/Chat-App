@@ -57,9 +57,7 @@ margin-left: -45px;
 }
 .lasTime{
   display: flex;
-  flex-direction: column;
-  margin-left: 26px;
-   
+ flex-direction: column;
 }
 .handle-lastMessage{
   display: flex;
@@ -81,14 +79,12 @@ margin-left: -45px;
   font-size: 6px;
   display: flex;
   margin-top: 21px;
-  margin-left: 78px;
-
 }
 .last-message{
   font-size: 11px;
   display: flex;
+  margin-top: -10px;
   color: #FFFFFF8c;
-  margin-left: -70px;
 }
 
 .space-betweenEdit {
@@ -171,6 +167,11 @@ z-index: 200;
 .user-name {
 display: flex;
 font-size: 16px;
+padding-right: 130px;
+}
+.flex-grow{
+  display: inline-block;
+    flex-direction: row;
 }
 .profile-chat{
   height: 40px;

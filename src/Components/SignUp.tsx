@@ -27,8 +27,7 @@ export default function SignUp() {
           email: data.email,
           password: data.password,
           uid: res.user.uid,
-          createdAt: Timestamp.now(),
-          isOnline: true
+          time: Timestamp.now()
         })
           .then(() => {
             setData({
@@ -64,16 +63,16 @@ export default function SignUp() {
           onChange={submitData}
           required
         />
-                <div className="loginData">
-        <input
-          className="loginEmail"
-          placeholder="Enter your email"
-          type="email"
-          name="email"
-          value={data.email}
-          onChange={submitData}
-          required
-        />
+        <div className="loginData">
+          <input
+            className="loginEmail"
+            placeholder="Enter your email"
+            type="email"
+            name="email"
+            value={data.email}
+            onChange={submitData}
+            required
+          />
         </div>
         <input
           className="loginEmail"
@@ -87,12 +86,12 @@ export default function SignUp() {
         <div className="LOGINDiv">
           <button className="LOGIN" onClick={submit}>
             SignUp
-          </button> 
+          </button>
         </div>
         <div className="LOGINDivs">
-        <Link className="link" to="/Login">
-        <button className="LOGIN">Login</button>
-        </Link>
+          <Link className="link" to="/Login">
+            <button className="LOGIN">Login</button>
+          </Link>
         </div>
       </div>
     </div>

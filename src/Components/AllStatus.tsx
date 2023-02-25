@@ -17,7 +17,7 @@ export const AllStatus = ({ post }: StatusProps) => {
           <div className="name-time">
             <p className="status-name">{post.name}</p>
             <span className="date">
-              <Moment fromNow>{post.time}</Moment>
+              <Moment fromNow>{post.time.toDate()}</Moment>
             </span>
           </div>
         </Link>

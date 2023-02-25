@@ -5,6 +5,7 @@ import { AllUsers, AllUsersType } from "../Context/AllUsers";
 import { useState } from "react";
 import Add from "../Images/no-image.png";
 import { UsersType } from "../Type/UserType";
+import Moment from "react-moment";
 
 export const UserInformation = () => {
   const [information, setInformation] = useState<UsersType>();
@@ -35,7 +36,9 @@ export const UserInformation = () => {
           <h1>Name: {information?.displayName}</h1>
           <h1>Email: {information?.email}</h1>
           <h1>ABOUT: {information?.about || "Busy"}</h1>
-          <h1>Joined at:</h1>
+          <h1>
+            Joined:<Moment fromNow>{information?.createdAt.toDate()}</Moment>
+          </h1>
         </>
       )}
     </div>

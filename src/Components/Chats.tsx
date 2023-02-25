@@ -1,20 +1,22 @@
-import { collection, query, onSnapshot } from "firebase/firestore";
+import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import React from "react";
 import { useEffect } from "react";
 import { db } from "../FirebaseConfig";
 import { useState } from "react";
 import { AllChats } from "./AllChats";
 import Search from "./Search";
+import { UsersType } from './../Type/UserType';
 
 export const Chats = () => {
-  const [chats, setChats] = useState<any>([]);
+  const [chats, setChats] = useState<UsersType[]>();
 
   useEffect(() => {
     // const fetch = async() => {
     //  const get = await getDoc(doc(db, "chats", id));
     //if (!get.exist()) return
-    const usersRef = collection(db, "chat");
-    const q = query(usersRef);
+    const q = query(collection(db, `chat`)
+    //, orderBy("time", "desc")
+    );
     const getUsers = onSnapshot(q, (snap) => {
       let array: any = [];
       snap.forEach((user) => {
@@ -30,9 +32,9 @@ export const Chats = () => {
     <div className="users-div">
       <Search />
       <div className="push-search">
-        {chats.length === 0 && <h1 className="findFriends">No chats yet</h1>}
+        {chats?.length === 0 && <h1 className="findFriends">No chats yet</h1>}
         {chats &&
-          chats.map((USER: any) => (
+          chats.map((USER: UsersType) => (
             <div key={USER.combined}>
               <AllChats USER={USER} />
             </div>

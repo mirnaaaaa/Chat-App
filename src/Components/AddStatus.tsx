@@ -1,4 +1,4 @@
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp, Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useContext } from "react";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import { db, storage } from "../FirebaseConfig";
 
 export const AddStatus = () => {
   const [text, setText] = useState<number | string>();
-  const [photo, setPhoto] = useState<any>(null);
+  const [photo, setPhoto] = useState<File | null>(null);
   const { user } = useContext(User) as UserType;
 
   const addFile = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -22,7 +22,7 @@ export const AddStatus = () => {
     if (text) {
       await addDoc(collection(db, "Posts"), {
         text,
-        time: serverTimestamp(),
+        time: Timestamp.now(),
         name: user.displayName,
         image: user.avatarPath,
         Seen: false
@@ -36,7 +36,7 @@ export const AddStatus = () => {
         getDownloadURL(imgRef).then(async (url) => {
           await addDoc(collection(db, "Posts"), {
             photo: url,
-            time: serverTimestamp(),
+            time: Timestamp.now(),
             name: user.displayName,
             image: user.avatarPath,
             Seen: false

@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "./Components/Navbar";
 import SignUp from "./Components/SignUp";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -17,14 +17,13 @@ import { AddStatus } from "./Components/AddStatus";
 import { PostsProvider } from "./Context/Posts";
 import { ShowStatus } from "./Components/ShowStatus";
 import { EditProfile } from "./Components/EditProfile";
-import { Show, ShowType } from "./Context/Show";
 import { Welcome } from "./Components/Welcome";
 import { Chats } from "./Components/Chats";
 import Users from "./Components/Users";
 
 export default function App() {
   const { docId } = useContext(User) as UserType;
-  const { show } = useContext(Show) as ShowType;
+  const [show, setShow] = useState<boolean>(false);
 
   return (
     <div className="app">
@@ -35,7 +34,7 @@ export default function App() {
               {docId && (
                 <>
                   <div className="nav-flex">
-                    <Navbar />
+                    <Navbar setShow={setShow} />
                   </div>
                   <div className="chats-flex">
                     {show ? <Status /> : <Chats />}

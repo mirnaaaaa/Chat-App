@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 import Add from "../Images/no-image.png";
 import { BsChatQuote } from "react-icons/bs";
 import { GiAwareness } from "react-icons/gi";
-import { Show, ShowType } from "../Context/Show";
+interface ShowType {
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export default function Navbar() {
+export default function Navbar({ setShow }: ShowType) {
   const { docId, user } = useContext(User) as UserType;
-  const { setShow } = useContext(Show) as ShowType;
 
   return (
     <div className="nav-bar">
