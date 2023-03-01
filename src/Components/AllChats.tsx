@@ -34,6 +34,7 @@ export const AllChats = ({ USER }: ChatType) => {
     <div>
       <div className="user-div" onClick={() => startChat(USER)}>
         <div className="handleSpace" key={USER.uid}>
+        <div className="colors">
           {USER.uid !== user.uid && USER.userId !== user.uid ? (
             <></>
           ) : (
@@ -59,6 +60,7 @@ export const AllChats = ({ USER }: ChatType) => {
                   </div>
                   {last?.to === USER.displayname ? (
                     <>
+                                          {USER.uid === user.uid && <h1 className="messageYourself">(You)</h1>}
                       <small className="last-messageTime">
                         <Moment fromNow>{last?.time.toDate()}</Moment>
                       </small>
@@ -101,6 +103,7 @@ export const AllChats = ({ USER }: ChatType) => {
           )}
         </div>
       </div>
+</div>
     </div>
   );
 };

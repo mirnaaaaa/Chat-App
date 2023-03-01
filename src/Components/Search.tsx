@@ -40,7 +40,7 @@ export default function Search() {
     const from = user.uid;
     const to = x;
     const id = from > to ? `${from + to}` : `${to + from}`;
-    console.log(id);
+
     const get = await getDoc(doc(db, "chats", id));
     if (from === to) return;
     if (!get.exists()) {

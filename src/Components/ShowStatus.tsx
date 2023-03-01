@@ -4,45 +4,82 @@ import { useState } from "react";
 import { Posts, PostsType } from "../Context/Posts";
 import { PostType } from "../Context/Posts";
 import Moment from "react-moment";
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+  setDoc,
+  Timestamp
+} from "firebase/firestore";
 import { db } from "../FirebaseConfig";
 import { User, UserType } from "../Context/User";
+import { SeenStatus } from "./SeenStatus";
 
 export const ShowStatus = () => {
   const [post, setPost] = useState<PostType>();
   const { posts } = useContext(Posts) as PostsType;
   const { docId, user } = useContext(User) as UserType;
+  const [seen, setSeen] = useState<PostType[]>();
 
   const { Id } = useParams();
 
   useEffect(() => {
-    const correct = posts.find((x) => x.Id === Id);
+    const correct = posts?.find((x) => x.Id === Id);
     if (correct) {
       setPost(correct);
     }
   }, [Id, posts, docId]);
 
   useEffect(() => {
-    const seen = async () => {
+    const Seen = async () => {
       const id = post?.Id;
-      if (post && post.name !== user.displayName) {
-        updateDoc(doc(db, "Posts", id), {
-          Seen: true
+      const userUid = user.uid;
+      const ID = id > userUid ? `${id + userUid}` : `${userUid + id}`;
+     // const Id = seen?.map((x: any) => x.Id);
+      // const get = await getDoc(doc(db, "seenPost", id));
+      ///time update problem
+      // if(get.exists() && Id === ID) return
+      if (post && post.uid !== user.uid) {
+        await setDoc(doc(db, "seenPost", id, "seen", ID), {
+          name: user.displayName,
+          Id: post?.Id,
+          uid: user.uid,
+          photo: user.avatarPath,
+          time: Timestamp.now(),
+          ID
         });
       }
     };
-    seen();
-  }, [post, Id]);
+    Seen();
+  }, [post, seen, user.avatarPath, user.displayName, user.uid]);
+
+  useEffect(() => {
+    const id = post?.Id;
+    const q = query(collection(db, `seenPost/${id}/seen`), orderBy("time"));
+    const snap = onSnapshot(q, (snap) => {
+      let array: any = [];
+      snap.forEach((doc) => {
+        array.push({ ...doc.data(), Id: doc.id });
+      });
+      setSeen(array);
+    });
+    return () => snap();
+  }, [post?.Id]);
 
   return (
-    <div className="addStatus-div">
+    <div className="addStatusDiv">
       {post && (
         <>
           <div>
             <div className="flex">
               <img className="profile" src={post.image} alt="Profile" />
-              <div className="name-time">
-                <p className="user-status">{post.name}</p>
+              <div className="name-times">
+                <div className="ifYou">
+                  <p className="user-status">{post.name}</p>
+                  {post.uid === user.uid && <h1 className="You">(You)</h1>}
+                </div>
                 <small className="time-status">
                   <Moment fromNow>{post.time.toDate()}</Moment>
                 </small>
@@ -51,8 +88,18 @@ export const ShowStatus = () => {
           </div>
           <div className="style-status">
             {post.text && <p>{post.text}</p>}
-            {post.photo && <img src={post.photo} alt="Img" />}
+            {post.photo && <img className="post-photo" src={post.photo} alt="Img" />}
           </div>
+          {seen?.length === 0 && post.uid === user.uid && (
+            <h1 className="noViews">No views yet</h1>
+          )}
+          {seen?.length !== 0 &&
+            post.uid === user.uid &&
+            seen?.map((view: PostType) => (
+              <>
+                <SeenStatus view={view} seen={seen} />
+              </>
+            ))}
         </>
       )}
     </div>

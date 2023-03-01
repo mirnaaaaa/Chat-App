@@ -12,7 +12,7 @@ export interface UserDataType {
   setChats: React.Dispatch<any>;
   chats: any;
   setUserDetails: React.Dispatch<UsersType[]>;
-  userDetails: UsersType[] ;
+  userDetails: UsersType[];
 }
 
 export const UserData = createContext<UserDataType | null>(null);
@@ -39,6 +39,7 @@ export const UserDataProvider = ({ children }: ChildrenType) => {
   }, []);
 
   const startChat = (user: UsersType): void => {
+    setChats([]);
     setChat(user);
     navigate("/Chat");
   };

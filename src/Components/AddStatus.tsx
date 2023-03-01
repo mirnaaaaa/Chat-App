@@ -1,4 +1,4 @@
-import { addDoc, collection, serverTimestamp, Timestamp } from "firebase/firestore";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useContext } from "react";
 import { useState } from "react";
@@ -25,7 +25,7 @@ export const AddStatus = () => {
         time: Timestamp.now(),
         name: user.displayName,
         image: user.avatarPath,
-        Seen: false
+        uid: user.uid
       });
       setText("");
     }
@@ -39,7 +39,7 @@ export const AddStatus = () => {
             time: Timestamp.now(),
             name: user.displayName,
             image: user.avatarPath,
-            Seen: false
+            uid: user.uid
           });
         });
       });

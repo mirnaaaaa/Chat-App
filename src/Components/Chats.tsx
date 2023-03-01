@@ -15,7 +15,7 @@ export const Chats = () => {
     //  const get = await getDoc(doc(db, "chats", id));
     //if (!get.exist()) return
     const q = query(collection(db, `chat`)
-    //, orderBy("time", "desc")
+    , orderBy("time", "desc")
     );
     const getUsers = onSnapshot(q, (snap) => {
       let array: any = [];

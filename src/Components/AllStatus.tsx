@@ -2,7 +2,6 @@ import React from "react";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import { PostType } from "../Context/Posts";
-import { VscTasklist } from "react-icons/vsc";
 
 interface StatusProps {
   post: PostType;
@@ -21,7 +20,6 @@ export const AllStatus = ({ post }: StatusProps) => {
             </span>
           </div>
         </Link>
-        {post.Seen && <VscTasklist className="seen" />}
       </div>
     </div>
   );

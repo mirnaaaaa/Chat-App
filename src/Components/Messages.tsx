@@ -31,7 +31,7 @@ export const Messages = ({ message }: MessageType) => {
           >
             <h1 className="message-text">{message.text}</h1>
             {message.photo && (
-              <img className="message-text" src={message.photo} alt="photos" />
+              <img className="message-photo" src={message.photo} alt="photos" />
             )}
             <span className="span"></span>
             <small className="time-message">

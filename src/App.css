@@ -28,11 +28,15 @@ margin-bottom: 8px;
 }
 .yourself{
 color: #FFFFFF8c;
-font-size: 8px;
+font-size: 9px;
 display: flex;
-margin-top: 35px;
-margin-left: -45px;
-
+margin-bottom: -18px;
+margin-top: -9px;
+}
+.handleYourself{
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
 }
 .date {
   font-size: 9px;
@@ -71,13 +75,20 @@ margin-left: -45px;
   display: flex;
 }
 .handleSpace{
-  margin: 15 0px;
   display: flex;
+  margin-top: 4px;
 }
-
+.last-messageTime-seen{
+  font-size: 6px;
+  display: flex;
+  margin-top: 2.5px;
+  color: #757575;
+}
 .last-messageTime{
   font-size: 6px;
   display: flex;
+  padding-left: 140px;
+  padding-right: 5px;
   margin-top: 21px;
 }
 .last-message{
@@ -129,6 +140,19 @@ margin-left: -45px;
 font-size: 14.2px;
 margin-left: 10px;
 }
+.message-photo {
+ width: 150px;
+ height: 160px;
+ margin: 5px;
+ border-radius: 5px;
+ object-fit: cover;
+}
+.post-photo{
+  width: 200px;
+  height: 210px;
+  border-radius: 5px;
+  object-fit: cover;
+}
 .m{
   display: flex;
   gap: 20px;
@@ -167,7 +191,12 @@ z-index: 200;
 .user-name {
 display: flex;
 font-size: 16px;
-padding-right: 130px;
+}
+.messageYourself{
+  color: #757575;
+  font-size: 8px;
+  padding-left: 5px;
+  margin-top: 18px;
 }
 .flex-grow{
   display: inline-block;
@@ -191,12 +220,21 @@ padding-right: 130px;
    color: blue;
   ;
 }
+.seenProfile{
+  height: 35px;
+  width: 40px;
+  border-radius: 50px;
+  margin-right: 10px;
+  margin-bottom: -10px;
+  object-fit: cover;
+}
 .profile-status {
   height: 50px;
   width: 55px;
   border-radius: 50px;
   margin-right: 10px;
   margin-bottom: -10px;
+  object-fit: cover;
 }
 .users {
   display: flex;
@@ -242,8 +280,8 @@ margin-left: 8px;
 }
 .user-div {
   display: flex;
-  padding: 10px  5px;
-  padding-bottom: 15px;
+  margin-bottom: 10px;
+  margin-left: 5px;
 }
 .chat {
   display: flex;
@@ -502,6 +540,39 @@ font-size: 10px;
 flex-direction: column;
 width: 100%;
 }
+.seenBy{
+margin-top: 15px;
+}
+.viewLength{
+  display: flex;
+align-items: center;
+justify-content: center;
+}
+.numberViews {
+  color: #757575;
+  font-size: 13px;
+  margin-left:6px;
+  margin-top: 8px;
+}
+.AiFillEye {
+font-size: 25px;
+}
+.seenName{
+  font-size: 12px;
+  margin-right: 20px;
+}
+.handleSeen{
+  display: flex;
+  margin-top: -1px;
+  align-items: center;
+}
+.addStatusDiv {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin-top: 25px;
+}
 .position-post {
   display: flex;
   align-items: center;
@@ -536,12 +607,7 @@ border-radius: 5px;
   border-style: solid;
 color: #1a1a1a;
 }
-.allStatus {
-  display: flex;
-  padding-bottom: 25px;
- justify-content: center;
- align-items: center;
-}
+
 .link {
   text-decoration: none;
   color: aliceblue;
@@ -554,13 +620,32 @@ align-items: center;
 .name-time {
   display: inline-block;
 }
+.name-times{
+  display: inline-block;
+margin-top: -10px;}
 .status-name {
   font-size: 13px;
-  margin-bottom: 21px;
+  margin-bottom: 17px;
 }
 .user-status {
   font-size: 13px;
   padding-top: 5px;
+}
+.You {
+  font-size: 8px;
+  color: #757575;
+  margin-top: 12px;
+  margin-left: 6px;
+}
+
+.ifYou {
+  display: flex;
+  align-items: center;
+}
+.noViews{
+  color: #757575;
+  margin-top: 25px;
+  font-size: 13px;
 }
 .style-status {
   border: 3px solid black;
@@ -720,6 +805,12 @@ padding: 15px 0px;
 .color:hover {
   background-color: #1a1a1a;
 }
+.colors:hover {
+  background-color: #1a1a1a;
+}
+.colors {
+  display: flex;
+}
 .nav-bar {
 display: flex;
 height: auto;
@@ -788,7 +879,6 @@ justify-content: center;
 .allStatus{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-left: -120px;
+  padding-bottom: 25px;
+margin-left: 9px;
 }

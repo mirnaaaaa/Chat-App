@@ -12,7 +12,8 @@ export interface PostType {
   name: number | string;
   time: string | number | any;
   Id:any;
-  Seen: boolean;
+  uid: number | string;
+  ID?: number | string;
 }
 
 export interface PostsType {
