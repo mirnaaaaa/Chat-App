@@ -39,11 +39,8 @@ export const ShowStatus = () => {
       const id = post?.Id;
       const userUid = user.uid;
       const ID = id > userUid ? `${id + userUid}` : `${userUid + id}`;
-      // const Id: any = seen?.map((x: any) => x.ID);
-      // const UID: any = Id?.map((x) => x)
-       //const get = await getDoc(doc(db, "seenPost", id));
-      ///time update problem
-    //   if(get.exists() && Id === ID) return
+      const get = await getDoc(doc(db, "seenPost", id, "seen", ID));
+      if (get.exists()) return;
       if (post && post.uid !== user.uid) {
         await setDoc(doc(db, "seenPost", id, "seen", ID), {
           name: user.displayName,
