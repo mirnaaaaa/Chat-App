@@ -7,6 +7,7 @@ import Moment from "react-moment";
 import {
   collection,
   doc,
+  getDoc,
   onSnapshot,
   orderBy,
   query,
@@ -16,6 +17,7 @@ import {
 import { db } from "../FirebaseConfig";
 import { User, UserType } from "../Context/User";
 import { SeenStatus } from "./SeenStatus";
+import { AiFillEye } from "react-icons/ai";
 
 export const ShowStatus = () => {
   const [post, setPost] = useState<PostType>();
@@ -37,10 +39,11 @@ export const ShowStatus = () => {
       const id = post?.Id;
       const userUid = user.uid;
       const ID = id > userUid ? `${id + userUid}` : `${userUid + id}`;
-     // const Id = seen?.map((x: any) => x.Id);
-      // const get = await getDoc(doc(db, "seenPost", id));
+      // const Id: any = seen?.map((x: any) => x.ID);
+      // const UID: any = Id?.map((x) => x)
+       //const get = await getDoc(doc(db, "seenPost", id));
       ///time update problem
-      // if(get.exists() && Id === ID) return
+    //   if(get.exists() && Id === ID) return
       if (post && post.uid !== user.uid) {
         await setDoc(doc(db, "seenPost", id, "seen", ID), {
           name: user.displayName,
@@ -88,16 +91,28 @@ export const ShowStatus = () => {
           </div>
           <div className="style-status">
             {post.text && <p>{post.text}</p>}
-            {post.photo && <img className="post-photo" src={post.photo} alt="Img" />}
+            {post.photo && (
+              <img className="post-photo" src={post.photo} alt="Img" />
+            )}
           </div>
           {seen?.length === 0 && post.uid === user.uid && (
             <h1 className="noViews">No views yet</h1>
+          )}
+          {post.uid === user.uid && (
+            <div className="viewLength">
+              <AiFillEye className="AiFillEye" />
+              {seen?.length ? (
+                <p className="numberViews">({seen.length})</p>
+              ) : (
+                <p className="numberViews">(0)</p>
+              )}
+            </div>
           )}
           {seen?.length !== 0 &&
             post.uid === user.uid &&
             seen?.map((view: PostType) => (
               <>
-                <SeenStatus view={view} seen={seen} />
+                <SeenStatus view={view} />
               </>
             ))}
         </>

@@ -1,10 +1,11 @@
 body{
+  position: relative;
+  width: auto;
   display: flex;
-  align-items: center;
   justify-content: center;
-  margin: 15px 0;
-  flex-wrap: wrap;
-
+  align-items: center;
+  height: auto;
+  margin: 10px;
 }
 .app{
   background-color: #1a1a1a;
@@ -13,7 +14,6 @@ body{
   display: flex;
   width: 180vh;
   height: 95vh;
-
 }
 .container {
   display: flex;
@@ -546,7 +546,13 @@ margin-top: 15px;
 .viewLength{
   display: flex;
 align-items: center;
+padding-top: 35px;
 justify-content: center;
+}
+.seen-status{
+  display: flex;
+  align-items: center;
+  justify-content: center; 
 }
 .numberViews {
   color: #757575;
@@ -825,12 +831,14 @@ height: 95vh;
 .nav-flex{
   display: flex;
   flex: 0.01;
+  width: 100%;
   background-color: #25D366;
 }
 .chats-flex{
   display: flex;
   flex: 0.6;
   background-color: #0d0d0d;
+  width: 100%;
 }
 .users-div{
   display: flex;

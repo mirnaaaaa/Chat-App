@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { User, UserType } from "../Context/User";
 import Moment from "react-moment";
-import { UsersType } from "../Type/UserType";
 import { ChatsType } from "./../Type/ChatsType";
 interface MessageType {
   message: ChatsType;
