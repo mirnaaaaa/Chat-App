@@ -97,7 +97,10 @@ margin-top: -9px;
   margin-top: -10px;
   color: #FFFFFF8c;
 }
-
+.imageText{
+  padding-right: 3px;
+  margin-top: 2px;
+}
 .space-betweenEdit {
   display: flex;
   justify-content: center;
